@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Task.gd" id="1_tp0o1"]
 
-[node name="Button" type="Button" node_paths=PackedStringArray("desc_label", "date_label")]
+[node name="Button" type="Button" node_paths=PackedStringArray("desc_label", "date_label") groups=["persist"]]
 custom_minimum_size = Vector2(0, 30)
 script = ExtResource("1_tp0o1")
 desc_label = NodePath("HBoxContainer/DescLabel")

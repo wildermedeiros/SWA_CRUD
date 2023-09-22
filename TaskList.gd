@@ -1,5 +1,6 @@
 extends VBoxContainer
 
+@export var save_load_script: CanvasLayer
 @export var delete_button: Button
 @export var edit_button: Button
 @export var task_scene: PackedScene
@@ -7,12 +8,14 @@ extends VBoxContainer
 @export var date_edit: TextEdit
 
 var tasks = []
-
 var task_on_focus = null:
 	get: return task_on_focus
 	set(value): 
 		task_on_focus = value
 		#emit task_on_focus change
+		
+func _ready():
+	save_load_script.load_game()
 	
 func _process(delta):
 	#Melhorar isso aqui, talvez colocar em um evento, quando há mudança no task_on_focus
@@ -27,6 +30,7 @@ func _on_delete_task():
 			tasks.erase(node_to_delete)
 			node_to_delete.queue_free()
 			clear_edit_texts()
+			save_load_script.save_game()
 
 func _on_create_task_button_down():
 	var task = task_scene.instantiate()
@@ -34,6 +38,7 @@ func _on_create_task_button_down():
 	clear_edit_texts()
 	tasks.append(task)
 	add_child(task)
+	save_load_script.save_game()
 
 func _on_edit_task_button():
 	if task_on_focus != null:
@@ -42,6 +47,7 @@ func _on_edit_task_button():
 		update_task_label(task_to_edit)
 		clear_edit_texts()
 		task_on_focus = null
+		save_load_script.save_game()
 
 func update_task_label(task):
 	task.set_desc_label(desc_edit.text)
