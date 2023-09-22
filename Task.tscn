@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" path="res://Task.gd" id="1_tp0o1"]
 
-[node name="Button" type="Button"]
+[node name="Button" type="Button" node_paths=PackedStringArray("desc_label", "date_label")]
 custom_minimum_size = Vector2(0, 30)
 script = ExtResource("1_tp0o1")
+desc_label = NodePath("HBoxContainer/DescLabel")
+date_label = NodePath("HBoxContainer/DateLabel")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -16,13 +18,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="DescLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.73
 text = "Testando uma anotação"
 
-[node name="Label2" type="Label" parent="HBoxContainer"]
+[node name="DateLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "12/12/1996"
