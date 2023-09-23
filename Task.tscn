@@ -4,28 +4,39 @@
 
 [node name="Button" type="Button" node_paths=PackedStringArray("desc_label", "date_label") groups=["persist"]]
 custom_minimum_size = Vector2(0, 30)
+offset_right = 337.0
+offset_bottom = 30.0
 script = ExtResource("1_tp0o1")
-desc_label = NodePath("HBoxContainer/DescLabel")
-date_label = NodePath("HBoxContainer/DateLabel")
+desc_label = NodePath("DescLabel")
+date_label = NodePath("DateLabel")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="DescLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.010989
-anchor_right = 0.997802
-anchor_bottom = 1.0
-grow_horizontal = 2
+anchor_left = 0.0237389
+anchor_top = 0.133333
+anchor_right = 0.700297
+anchor_bottom = 0.9
+offset_left = -3.0
+offset_right = -3.0
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="DescLabel" type="Label" parent="HBoxContainer"]
-layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.73
-text = "Testando uma anotação"
+size_flags_stretch_ratio = 2.4
+clip_text = true
 
-[node name="DateLabel" type="Label" parent="HBoxContainer"]
-layout_mode = 2
+[node name="DateLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -13.0
+offset_right = -4.0
+offset_bottom = 13.0
+grow_horizontal = 0
+grow_vertical = 2
 size_flags_horizontal = 3
 text = "12/12/1996"
 

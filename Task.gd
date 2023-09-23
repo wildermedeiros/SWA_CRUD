@@ -22,7 +22,5 @@ func save():
 		"parent" : get_parent().get_path(),
 		"desc_label_text" : desc_label.text,
 		"date_label_text" : date_label.text
-#		"pos_x" : position.x, # Vector2 is not supported by JSON
-#		"pos_y" : position.y,
 	}
 	return save_dict

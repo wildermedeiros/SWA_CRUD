@@ -6,6 +6,7 @@ extends VBoxContainer
 @export var task_scene: PackedScene
 @export var desc_edit: TextEdit
 @export var date_edit: TextEdit
+@export var save_after_seconds = 5
 
 var tasks = []
 var task_on_focus = null:
@@ -30,7 +31,7 @@ func _on_delete_task():
 			tasks.erase(node_to_delete)
 			node_to_delete.queue_free()
 			clear_edit_texts()
-			save_load_script.save_game()
+			await save()
 
 func _on_create_task_button_down():
 	var task = task_scene.instantiate()
@@ -38,7 +39,7 @@ func _on_create_task_button_down():
 	clear_edit_texts()
 	tasks.append(task)
 	add_child(task)
-	save_load_script.save_game()
+	await save()
 
 func _on_edit_task_button():
 	if task_on_focus != null:
@@ -47,7 +48,7 @@ func _on_edit_task_button():
 		update_task_label(task_to_edit)
 		clear_edit_texts()
 		task_on_focus = null
-		save_load_script.save_game()
+		await save()
 
 func update_task_label(task):
 	task.set_desc_label(desc_edit.text)
@@ -62,3 +63,7 @@ func set_date_edit(new_text):
 func clear_edit_texts():
 	desc_edit.text = ""
 	date_edit.text = ""
+	
+func save():
+	await get_tree().create_timer(save_after_seconds).timeout
+	save_load_script.save_game()
