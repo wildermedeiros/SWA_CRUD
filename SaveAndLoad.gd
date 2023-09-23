@@ -41,7 +41,7 @@ func load_game():
 
 		var task = load(node_data["filename"]).instantiate()
 		get_node(node_data["parent"]).add_child(task)
-		get_node("HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer").tasks.append(task)
+		get_node("ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer").tasks.append(task)
 		task.set_desc_label(node_data["desc_label_text"])
 		task.set_date_label(node_data["date_label_text"])
 
