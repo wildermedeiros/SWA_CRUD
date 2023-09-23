@@ -1,26 +1,35 @@
-[gd_scene load_steps=16 format=3 uid="uid://dqpubm1tofce3"]
+[gd_scene load_steps=18 format=3 uid="uid://dqpubm1tofce3"]
 
 [ext_resource type="Script" path="res://TaskList.gd" id="1_g5txw"]
 [ext_resource type="Script" path="res://SaveAndLoad.gd" id="1_jypxo"]
 [ext_resource type="PackedScene" uid="uid://dkxjaujmgy8ae" path="res://Task.tscn" id="2_4a31f"]
+[ext_resource type="Texture2D" uid="uid://6he61a0546lb" path="res://arts/ui/grey_button05.png" id="2_jnr5k"]
 [ext_resource type="FontFile" uid="uid://dheihwi3ub1fl" path="res://arts/fonts/kenvector_future.ttf" id="2_mqnjf"]
 [ext_resource type="Texture2D" uid="uid://dtq4xpps15pg3" path="res://arts/ui/grey_panel.png" id="2_xgr4y"]
 [ext_resource type="Texture2D" uid="uid://cke5p5hhgucb1" path="res://arts/ui/blue_button01.png" id="4_asky3"]
 [ext_resource type="Texture2D" uid="uid://b8fc3vwm22e1l" path="res://arts/ui/green_button01.png" id="4_oy7ho"]
 [ext_resource type="Texture2D" uid="uid://iwmjjnltfou6" path="res://arts/ui/red_button12.png" id="4_smj6w"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c01uc"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bx6wy"]
 texture = ExtResource("2_xgr4y")
 texture_margin_left = 5.0
 texture_margin_top = 5.0
 texture_margin_right = 5.0
-texture_margin_bottom = 5.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c01uc"]
+texture = ExtResource("2_jnr5k")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 9.0
+texture_margin_bottom = 6.0
 
 [sub_resource type="Theme" id="Theme_hken7"]
 default_font = ExtResource("2_mqnjf")
 default_font_size = 12
 Button/colors/font_color = Color(0.337255, 0.32549, 0.32549, 1)
 Button/colors/font_focus_color = Color(0.337255, 0.32549, 0.32549, 1)
+Panel/styles/panel = SubResource("StyleBoxTexture_bx6wy")
 TextEdit/colors/caret_color = Color(0.192157, 0.184314, 0.184314, 1)
 TextEdit/colors/font_color = Color(0.192157, 0.184314, 0.184314, 1)
 TextEdit/colors/font_placeholder_color = Color(0.141176, 0.141176, 0.141176, 0.239216)
@@ -63,8 +72,9 @@ texture_margin_right = 5.0
 texture_margin_bottom = 2.0
 modulate_color = Color(1, 1, 1, 0)
 
-[node name="UI" type="CanvasLayer"]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("task_list")]
 script = ExtResource("1_jypxo")
+task_list = NodePath("ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -89,18 +99,38 @@ theme_override_constants/margin_bottom = 5
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer"]
 layout_mode = 2
 theme = SubResource("Theme_hken7")
+theme_override_constants/separation = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.4
+size_flags_stretch_ratio = 0.6
+
+[node name="Panel" type="Panel" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer"]
+layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="MarginContainer" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="Label" type="Label" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.341176, 0.329412, 0.329412, 1)
@@ -108,7 +138,7 @@ text = "Gerencie atividades"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DescTextEdit" type="TextEdit" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="DescTextEdit" type="TextEdit" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 placeholder_text = "Escreva ou selecione uma atividade para editar"
@@ -116,20 +146,20 @@ wrap_mode = 1
 scroll_smooth = true
 caret_blink = true
 
-[node name="DateTextEdit" type="TextEdit" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="DateTextEdit" type="TextEdit" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 placeholder_text = "Insire uma data"
 wrap_mode = 1
 caret_blink = true
 
-[node name="ButtonsHBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="ButtonsHBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_stretch_ratio = 0.09
 theme_override_constants/separation = 5
 
-[node name="DeleteButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/ButtonsHBoxContainer"]
+[node name="DeleteButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.968627, 0.964706, 0.960784, 1)
@@ -137,7 +167,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_hof3h")
 theme_override_styles/hover = SubResource("StyleBoxTexture_hof3h")
 text = "Excluir"
 
-[node name="EditButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/ButtonsHBoxContainer"]
+[node name="EditButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.968627, 0.964706, 0.960784, 1)
@@ -146,7 +176,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_hniyj")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_fbhhp")
 text = "Editar"
 
-[node name="CreateButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/ButtonsHBoxContainer"]
+[node name="CreateButton" type="Button" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer/ButtonsHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxTexture_hltde")
@@ -154,40 +184,75 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_hltde")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_s1neh")
 text = "Criar"
 
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.341176, 0.329412, 0.329412, 1)
+text = "Sobre:"
+
+[node name="LinkButton" type="LinkButton" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.341176, 0.329412, 0.329412, 1)
+theme_override_colors/font_hover_color = Color(0, 0.141176, 1, 1)
+text = "LinkedIn"
+uri = "https://www.linkedin.com/in/wildermedeiros/"
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="MarginContainer" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="Panel" type="Panel" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="Label" type="Label" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/MarginContainer"]
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.341176, 0.329412, 0.329412, 1)
 text = "Lista de atividades"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer" node_paths=PackedStringArray("save_load_script", "delete_button", "edit_button", "desc_edit", "date_edit")]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2/VBoxContainer/ScrollContainer" node_paths=PackedStringArray("save_load_script", "delete_button", "edit_button", "desc_edit", "date_edit")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_g5txw")
-save_load_script = NodePath("../../../../../..")
-delete_button = NodePath("../../../VBoxContainer/ButtonsHBoxContainer/DeleteButton")
-edit_button = NodePath("../../../VBoxContainer/ButtonsHBoxContainer/EditButton")
+save_load_script = NodePath("../../../../../../../../..")
+delete_button = NodePath("../../../../../../VBoxContainer3/Panel/MarginContainer/VBoxContainer/ButtonsHBoxContainer/DeleteButton")
+edit_button = NodePath("../../../../../../VBoxContainer3/Panel/MarginContainer/VBoxContainer/ButtonsHBoxContainer/EditButton")
 task_scene = ExtResource("2_4a31f")
-desc_edit = NodePath("../../../VBoxContainer/DescTextEdit")
-date_edit = NodePath("../../../VBoxContainer/DateTextEdit")
+desc_edit = NodePath("../../../../../../VBoxContainer3/Panel/MarginContainer/VBoxContainer/DescTextEdit")
+date_edit = NodePath("../../../../../../VBoxContainer3/Panel/MarginContainer/VBoxContainer/DateTextEdit")
 save_after_seconds = 2
 
-[connection signal="button_down" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/ButtonsHBoxContainer/DeleteButton" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" method="_on_delete_task"]
-[connection signal="button_down" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/ButtonsHBoxContainer/EditButton" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" method="_on_edit_task_button"]
-[connection signal="button_down" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer/ButtonsHBoxContainer/CreateButton" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer" method="_on_create_task_button_down"]
+[connection signal="button_down" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer/ButtonsHBoxContainer/DeleteButton" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer" method="_on_delete_task"]
+[connection signal="button_down" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer/ButtonsHBoxContainer/EditButton" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer" method="_on_edit_task_button"]
+[connection signal="button_down" from="ColorRect/MarginContainer/HBoxContainer/VBoxContainer3/Panel/MarginContainer/VBoxContainer/ButtonsHBoxContainer/CreateButton" to="ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/Panel/MarginContainer2/VBoxContainer/ScrollContainer/VBoxContainer" method="_on_create_task_button_down"]

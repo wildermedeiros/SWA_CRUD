@@ -1,5 +1,7 @@
 extends Node
 
+@export var task_list: VBoxContainer
+
 func save_game():
 	var save = FileAccess.open("user://savegame.save", FileAccess.WRITE)
 	var save_nodes = get_tree().get_nodes_in_group("persist")
@@ -41,7 +43,7 @@ func load_game():
 
 		var task = load(node_data["filename"]).instantiate()
 		get_node(node_data["parent"]).add_child(task)
-		get_node("ColorRect/MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/VBoxContainer").tasks.append(task)
+		task_list.tasks.append(task)
 		task.set_desc_label(node_data["desc_label_text"])
 		task.set_date_label(node_data["date_label_text"])
 
